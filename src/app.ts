@@ -1,4 +1,4 @@
-import express, {Request, Response, NextFunction} from 'express'
+import express, { Request, Response, NextFunction } from 'express'
 import indexRouter from './routes'
 import apiRouter from './routes/api'
 import ErrorHandler from './utils/errorHandler'
@@ -9,15 +9,29 @@ class Server {
     private apiRouter = apiRouter
 
     constructor() {
+        this.appInit()
+    }
+
+    appInit() {
         this.app.use('/', this.router)
         this.app.use('/api', this.apiRouter)
+        // this.app.use(new ResponseHandler)
 
-        // Error handling middleware
+        // Server Error Handler
         this.app.use((err: ErrorHandler, req: Request, res: Response, next: NextFunction) => {
-            return res.status(err.statusCode).json({
+            return res.status(err.statusCode).send({
                 status: false,
                 statusCode: err.statusCode,
                 message: err.message
+            })
+        })
+
+        // 404 Error
+        this.app.use((req: Request, res: Response) => {
+            return res.status(404).send({
+                status: false,
+                statusCode: 404,
+                message: "Not Found!"
             })
         })
     }

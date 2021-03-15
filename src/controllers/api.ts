@@ -6,7 +6,7 @@ class APIController {
     }
     welcome(req: Request, res: Response) {
         return res.status(200).json({
-            text: "API controller's index method."
+            text: "API controller's welcome method."
         })
     }
 }
