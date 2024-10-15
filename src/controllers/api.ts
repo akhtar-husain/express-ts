@@ -5,9 +5,10 @@ class APIController {
         throw new ErrorHandler(501, "Not implemented!")
     }
     welcome(req: Request, res: Response) {
-        return res.status(200).json({
+        res.status(200).json({
             text: "API controller's welcome method."
-        })
+        });
+        return;
     }
 }
 

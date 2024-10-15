@@ -15,24 +15,28 @@ class Server {
     appInit() {
         this.app.use('/', this.router)
         this.app.use('/api', this.apiRouter)
+
+        this.app.disable('x-powered-by');
         // this.app.use(new ResponseHandler)
 
         // Server Error Handler
         this.app.use((err: ErrorHandler, req: Request, res: Response, next: NextFunction) => {
-            return res.status(err.statusCode).send({
+            res.status(err.statusCode).send({
                 status: false,
                 statusCode: err.statusCode,
                 message: err.message
-            })
+            });
+            return;
         })
 
         // 404 Error
         this.app.use((req: Request, res: Response) => {
-            return res.status(404).send({
+            res.status(404).send({
                 status: false,
                 statusCode: 404,
                 message: "Not Found!"
-            })
+            });
+            return;
         })
     }
 }
